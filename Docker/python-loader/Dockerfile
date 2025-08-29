@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-bullseye
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     # => Empêche Python d’écrire les fichiers .pyc (bytecode compilé) sur disque.
@@ -10,9 +10,17 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Installer dépendances système nécessaires pour psycopg, compilation éventuelle
 
-RUN apt-get update \
-    # met à jour la liste des paquets disponibles (index des dépôts).
-    #Nécessaire avant un apt-get install pour s’assurer d’installer les dernières versions accessibles.
+RUN rm -f /etc/apt/sources.list.d/* || true \
+    # => supprime les sources additionnelles potentiellement problématiques
+    # (utile si l’image de base a des sources obsolètes ou non accessibles)
+    && printf '%s\n' \
+       'deb https://deb.debian.org/debian bullseye main contrib non-free' \
+       'deb https://deb.debian.org/debian bullseye-updates main contrib non-free' \
+       'deb https://security.debian.org/debian-security bullseye-security main contrib non-free' \
+      > /etc/apt/sources.list \
+    # => remplace le fichier sources.list par des sources officielles et à jour.
+    # Important pour éviter les erreurs 404 lors de l’installation des paquets si les sources par défaut sont obsolètes.
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
     # -y: répond automatiquement "oui" aux prompts d’installation.
     # --no-install-recommends: n’installe pas les paquets recommandés, réduisant la taille de l’image.

@@ -20,10 +20,10 @@ services:
       - postgres
     environment:
       DB_HOST: ${DB_HOST}
-      DB_PORT: '${DB_PORT}'
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - data:/data
       - ./python-loader:/app
@@ -38,6 +38,25 @@ services:
       MB_DB_FILE: ${MB_DB_FILE}
     volumes:
       - metabase-data:/metabase-data
+
+  dbt:
+    build:
+      context: ./dbt
+      dockerfile: Dockerfile
+    image: dbt-elt-retail-dbt:1.5.0
+    volumes:
+      - ./dbt:/app
+      - ./dbt/profiles.yml:/root/.dbt/profiles.yml:ro
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    working_dir: /app
+    command: ["dbt", "debug"]
 
 volumes:
   pgdata:

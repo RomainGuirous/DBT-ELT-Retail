@@ -1,0 +1,13 @@
+name: retail
+version: '1.0'
+config-version: 2
+profile: retail
+
+# Where to find the models
+model-paths: ["models"]
+
+# where dbt will store compiled SQL
+target-path: target
+
+# where dbt will store run results
+clean-targets: ["target", "dbt_modules"]

@@ -1,0 +1,15 @@
+retail:
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DB_HOST') }}"
+      port: "{{ env_var('POSTGRES_PORT') | int }}"
+      user: "{{ env_var('POSTGRES_USER') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('POSTGRES_DB') }}"
+      schema: public
+      threads: 1
+  target: dev
+
+# en YAMEL, les guillemets indiquent une chaîne de caractères
+# pour les int, pas besoin de guillemets

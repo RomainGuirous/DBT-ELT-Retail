@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: stg_ventes
+    description: "Staging view for raw sales data"
+    columns:
+      - name: id_brut
+        tests:
+          - not_null
+
+  - name: dim_date
+    description: "Date dimension"
+    columns:
+      - name: cle_date
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_produit
+    description: "Produit dimension"
+    columns:
+      - name: cle_produit
+        tests:
+          - not_null
+          - unique
+      - name: code_produit
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_client
+    description: "Client dimension"
+    columns:
+      - name: cle_client
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_magasin
+    description: "Magasin dimension"
+    columns:
+      - name: cle_magasin
+        tests:
+          - not_null
+          - unique
+
+  - name: fait_ventes
+    description: "Fact ventes"
+    columns:
+      - name: cle_vente
+        tests:
+          - not_null
+          - unique
+      - name: cle_date
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: cle_date
+
+  - name: fait_commandes
+    description: "Fact commandes"
+    columns:
+      - name: cle_commande
+        tests:
+          - not_null
+          - unique
+
+  - name: fait_paiements
+    description: "Fact paiements"
+    columns:
+      - name: cle_paiement
+        tests:
+          - not_null
+          - unique
