@@ -1,14 +1,14 @@
 {{ config(materialized='table') }}
 
 with clients as (
-  select
+  select distinct
     customer_id,
     customer_prenom,
     customer_nom,
     customer_email
   from {{ ref('stg_ventes') }}
   where customer_id is not null
-)
+) 
 
 select
   row_number() over (order by customer_id) as cle_client,
@@ -22,5 +22,4 @@ select
   null::timestamp as date_inscription,
   true as flag_courant
 from clients
-group by customer_id, customer_prenom, customer_nom, customer_email
 order by id_client;
