@@ -20,4 +20,4 @@ select
   null::jsonb as payment_payload,
   null::timestamptz as date_paiement_timestamp,
   now() as date_chargement
-from {{ ref('stg_ventes') }};
+from {{ ref('stg_ventes') }}

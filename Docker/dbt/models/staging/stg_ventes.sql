@@ -28,6 +28,5 @@ select
   currency,
   payment_method,
   loaded_at::timestamp as loaded_at,
-  (case when jsonb_typeof(raw_json) is not null then raw_json::jsonb else null end) as raw_json
+  (case when jsonb_typeof(raw_json::jsonb) is not null then raw_json::jsonb else null end) as raw_json
 from {{ ref('raw_ventes') }}
-;

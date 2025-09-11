@@ -35,4 +35,4 @@ select
   false as est_retour,
   now() as date_chargement
 from orders o
-order by invoice_no;
+order by invoice_no

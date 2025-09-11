@@ -22,4 +22,4 @@ select
   null::timestamp as date_inscription,
   true as flag_courant
 from clients
-order by id_client;
+order by id_client

@@ -24,4 +24,4 @@ select
   true as flag_courant
 from prod
 group by product_sku, product_name, brand, category, subcategory
-order by code_produit;
+order by code_produit

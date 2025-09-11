@@ -47,4 +47,4 @@ select
   payment_method as moyen_paiement,
   now() as date_chargement
 from base
-order by invoice_no, invoice_line;
+order by invoice_no, invoice_line

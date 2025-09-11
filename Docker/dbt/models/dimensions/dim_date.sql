@@ -16,4 +16,4 @@ select
   extract(dow from dt)::int as jour_semaine,
   case when extract(dow from dt) in (0,6) then true else false end as est_weekend
 from raw_dates
-order by dt;
+order by dt

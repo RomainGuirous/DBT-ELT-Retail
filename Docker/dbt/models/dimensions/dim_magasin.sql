@@ -21,4 +21,4 @@ select
   country as pays
 from stores
 group by store_id, store_name, store_city, store_region, country
-order by id_magasin;
+order by id_magasin
